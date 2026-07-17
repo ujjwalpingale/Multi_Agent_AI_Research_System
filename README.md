@@ -6,7 +6,7 @@ An AI-powered research system utilizing a network of specialized, collaborating 
 
 ### 🚀 Frontend (Streamlit)
 **Live Application:**  
-https://multiagentairesearchsystem-xigcuar0egfpotuwornxke.streamlit.app
+https://multiagentairesearchsystem-xigcuaroegfpotuwornxke.streamlit.app/
 
 > **Note:** The application is hosted on the free tiers of Streamlit Community Cloud and Render. The first request after a period of inactivity may take 30–60 seconds while the backend wakes up.
 
