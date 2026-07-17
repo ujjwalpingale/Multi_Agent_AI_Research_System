@@ -90,5 +90,4 @@ python pipeline.py
 ```
 It will prompt you for a topic and stream the agent logs directly to your console.
 
-## License
-MIT License
+
