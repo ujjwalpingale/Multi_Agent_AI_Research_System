@@ -1,6 +1,22 @@
-# Multi-Agent Research System ✨
+# 🤖 Multi-Agent Research System ✨
 
 An AI-powered research system utilizing a network of specialized, collaborating AI agents to automatically perform in-depth web research, analyze sources, and generate comprehensive peer-reviewed reports.
+
+## 🌐 Live Demo
+
+### 🚀 Frontend (Streamlit)
+**Live Application:**  
+https://multiagentairesearchsystem-xigcuar0egfpotuwornxke.streamlit.app
+
+> **Note:** The application is hosted on the free tiers of Streamlit Community Cloud and Render. The first request after a period of inactivity may take 30–60 seconds while the backend wakes up.
+
+### 📚 Backend API
+https://multi-agent-ai-research-system-1-rkdv.onrender.com
+
+### 📖 API Documentation (Swagger UI)
+https://multi-agent-ai-research-system-1-rkdv.onrender.com/docs
+
+---
 
 ## Overview
 
