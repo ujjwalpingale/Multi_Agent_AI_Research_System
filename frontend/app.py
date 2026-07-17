@@ -132,9 +132,14 @@ st.markdown("""
 
 
 import json
+import os
 
 # Constants
-API_URL = "http://127.0.0.1:8000/research"
+BACKEND_URL = os.getenv(
+    "BACKEND_URL",
+    "https://multi-agent-ai-research-system-1-rkdv.onrender.com"
+)
+API_URL = f"{BACKEND_URL}/research"
 
 # UI Layout
 st.markdown('<h1 class="gradient-text">✨ Multi-Agent Research System</h1>', unsafe_allow_html=True)
@@ -167,13 +172,14 @@ if generate_btn:
         feedback_placeholder = st.empty()
         
         try:
-            response = requests.post(
-                API_URL,
-                json={"topic": topic},
-                stream=True,
-                timeout=300
-            )
-            response.raise_for_status()
+            with st.spinner("Researching..."):
+                response = requests.post(
+                    API_URL,
+                    json={"topic": topic},
+                    stream=True,
+                    timeout=300
+                )
+                response.raise_for_status()
             
             report_text = ""
             
@@ -182,6 +188,8 @@ if generate_btn:
                     decoded_line = line.decode('utf-8')
                     try:
                         event = json.loads(decoded_line)
+                        if not isinstance(event, dict) or "type" not in event or "data" not in event:
+                            continue
                         event_type = event.get("type")
                         data = event.get("data")
                         
@@ -201,9 +209,18 @@ if generate_btn:
                     except json.JSONDecodeError:
                         continue
                         
+        except requests.exceptions.Timeout:
+            status_container.update(label="⏱️ Timeout Error", state="error")
+            st.error("The request to the backend timed out. Please try again later.")
+        except requests.exceptions.HTTPError as e:
+            status_container.update(label="⚠️ HTTP Error", state="error")
+            st.error(f"The backend returned an error: {e}")
         except requests.exceptions.ConnectionError:
             status_container.update(label="❌ Connection Error", state="error")
-            st.error("Could not connect to the backend. Please ensure the FastAPI server is running on http://127.0.0.1:8000")
+            st.error(f"Could not connect to the backend at {BACKEND_URL}. Please ensure the server is running and accessible.")
+        except json.JSONDecodeError:
+            status_container.update(label="⚠️ Data Error", state="error")
+            st.error("Received invalid data from the backend.")
         except Exception as e:
             status_container.update(label="⚠️ Error", state="error")
             st.error(f"An unexpected error occurred: {e}")
